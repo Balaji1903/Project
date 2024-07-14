@@ -3,9 +3,6 @@ include 'config.php';
 
 // Fetch up to 6 products from the database
 $product = $conn->query("SELECT * FROM product ");
-
-// Fetch categories for sidebar
-
 ?>
 
 <!DOCTYPE html>
@@ -13,7 +10,7 @@ $product = $conn->query("SELECT * FROM product ");
 <head>
     <meta charset="UTF-8">
     <title>Home Page</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
         .card-img-top {
             max-height: 200px;
@@ -57,7 +54,6 @@ $product = $conn->query("SELECT * FROM product ");
                     <ul class="nav flex-column">
                         <li class="nav-item">
                             <h4 class="nav-link">Categories</h4>
-                            
                         </li>
                         <li class="nav-item mt-4">
                             <h4 class="nav-link">Filters</h4>
@@ -82,7 +78,7 @@ $product = $conn->query("SELECT * FROM product ");
                                     <p class="card-text"><?= $row['description'] ?></p>
                                     <p class="card-text"><strong>Price:</strong> $<?= $row['price'] ?></p>
                                     <a href="add_to_cart.php" class="btn btn-primary">Add to Cart</a>
-                                    <a href="add_to_wishlist.php" class="btn btn-secondary">Wishlist</a>
+                                    <a href="order.php?id=<?= $row['id'] ?>" class="btn btn-primary">Buy Now</a>
                                 </div>
                             </div>
                         </div>
@@ -99,6 +95,6 @@ $product = $conn->query("SELECT * FROM product ");
         </div>
     </footer>
 
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

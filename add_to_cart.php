@@ -1,19 +1,21 @@
 <?php
-session_start();
 include 'config.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $product_id = $_POST['product_id'];
-    $user_id = $_SESSION['user_id']; // Assuming you have user sessions implemented
+    $product_name = $_POST['product_name'];
+    $product_price = $_POST['product_price'];
+    $quantity = $_POST['quantity'];
+    $total_price = $_POST['total_price'];
 
-    // Check if the product is already in the cart
-    $check_cart = $conn->query("SELECT * FROM cart WHERE user_id = '$user_id' AND product_id = '$product_id'");
-    if ($check_cart->num_rows == 0) {
-        // Add the product to the cart
-        $conn->query("INSERT INTO cart (user_id, product_id) VALUES ('$user_id', '$product_id')");
-        echo 'Product added to cart.';
+    // Insert the cart item into the database
+    $sql = "INSERT INTO cart (product_id, product_name, product_price, quantity, total_price)
+            VALUES ('$product_id', '$product_name', '$product_price', '$quantity', '$total_price')";
+
+    if ($conn->query($sql) === TRUE) {
+        echo 'success';
     } else {
-        echo 'Product is already in your cart.';
+        echo 'error';
     }
 }
 ?>

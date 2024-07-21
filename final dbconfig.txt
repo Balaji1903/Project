@@ -1,0 +1,39 @@
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "users";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+function getProducts($conn, $id = null) {
+    if ($id) {
+        $stmt = $conn->prepare("SELECT * FROM product WHERE id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
+    } else {
+        $result = $conn->query("SELECT * FROM product");
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+}
+
+function updateProduct($conn, $productId, $data) {
+    $stmt = $conn->prepare("UPDATE product SET name = ?, price = ?, description = ?, main_category = ?, sub_category = ?, image = ? WHERE id = ?");
+    $stmt->bind_param("ssssssi", $data['name'], $data['price'], $data['description'], $data['main_category'], $data['sub_category'], $data['image'], $productId);
+    return $stmt->execute();
+}
+
+function deleteProduct($conn, $productId) {
+    $stmt = $conn->prepare("DELETE FROM product WHERE id = ?");
+    $stmt->bind_param("i", $productId);
+    return $stmt->execute();
+}
+?>
